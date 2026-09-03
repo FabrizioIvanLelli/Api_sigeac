@@ -6,13 +6,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-<<<<<<< HEAD
-=======
   <ItemGroup>
     <Compile Remove="Player.cs" />
     <Compile Remove="Team.cs" />
     <Compile Remove="Trainer.cs" />
   </ItemGroup>
 
->>>>>>> Ejercicio 2 Agregar archivos de proyecto.
 </Project>
