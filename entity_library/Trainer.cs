@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace entity_library
 {
-    internal class Trainer : Person
+    public class Trainer : Person
     {
     }
 }

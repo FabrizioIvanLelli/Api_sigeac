@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace entity_library
 {
-    internal class Team
+    public class Team
     {
         private string name = "";
         private string category = "";
