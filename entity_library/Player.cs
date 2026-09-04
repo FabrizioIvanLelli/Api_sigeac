@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace entity_library
 {
-    internal class Player : Person
+    public class Player : Person
     {
         private int number = 0;
 
