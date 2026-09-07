@@ -8,7 +8,7 @@ using entity_library;
 
 namespace dao_library
 {
-    internal class TrainerDAO
+    public class TrainerDAO
     {
         public Trainer CreateTrainer(Trainer trainer)
         {

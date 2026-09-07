@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace dao_library
 {
-    internal class ActivityDAO
+    public class ActivityDAO
     {
         public Activity CreateActivity(Activity activity)
         {

@@ -8,10 +8,16 @@ namespace entity_library
 {
     public class Person
     {
+        private long id;
         private string name = "";
         private int age = 0;
         private string? dni;
 
+        public long Id
+        {
+            get { return id; }
+            set { id = value; }
+        }
         public string Name
         {
             get { return name; }

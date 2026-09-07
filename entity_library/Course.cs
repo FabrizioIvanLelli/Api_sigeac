@@ -8,11 +8,17 @@ namespace entity_library
 {
     public class Course
     {
+        private long id;
         private string name = "";
 
         private List<Student> students = new List<Student>();
         private List<Activity> activities = new List<Activity>();
 
+        public long Id
+        {
+            get { return id; }
+            set { id = value; }
+        }
         public string Name
         {
             get { return name; }
