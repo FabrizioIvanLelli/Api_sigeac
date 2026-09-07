@@ -8,7 +8,7 @@ using entity_library;
 
 namespace dao_library
 {
-    internal class StudentDAO
+    public class StudentDAO
     {
         public Student CreateStudent(Student student)
         {
@@ -16,9 +16,9 @@ namespace dao_library
             return student;
         }
 
-        public Student? ReadStudentById(string fileId)
+        public Student? ReadStudentById(long id)
         {
-            return MockDatabase.Students.FirstOrDefault(s => s.File == fileId);
+            return MockDatabase.Students.FirstOrDefault(s => s.Id == id);
         }
 
         public List<Student> ReadStudents()
@@ -28,7 +28,7 @@ namespace dao_library
 
         public bool UpdateStudent(Student updatedStudent)
         {
-            var existingStudent = ReadStudentById(updatedStudent.File);
+            var existingStudent = ReadStudentById(updatedStudent.Id);
 
             if (existingStudent != null)
             {
@@ -44,9 +44,9 @@ namespace dao_library
             return false; 
         }
 
-        public bool DeleteStudent(string fileId)
+        public bool DeleteStudent(long id)
         {
-            var studentToDelete = ReadStudentById(fileId);
+            var studentToDelete = ReadStudentById(id);
 
             if (studentToDelete != null)
             {

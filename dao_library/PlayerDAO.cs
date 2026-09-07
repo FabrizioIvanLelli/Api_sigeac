@@ -8,7 +8,7 @@ using entity_library;
 
 namespace dao_library
 {
-    internal class PlayerDAO
+    public class PlayerDAO
     {
         public Player CreatePlayer(Player player)
         {
@@ -16,9 +16,9 @@ namespace dao_library
             return player;
         }
 
-        public Player? ReadPlayerByNumber(int number)
+        public Player? ReadPlayerById(int id)
         {
-            return MockDatabase.Players.FirstOrDefault(s => s.Number == number);
+            return MockDatabase.Players.FirstOrDefault(s => s.Id == id);
         }
 
         public List<Player> ReadPlayers()
@@ -28,7 +28,7 @@ namespace dao_library
 
         public bool UpdatePlayer(Player updatedPlayer)
         {
-            var existingPlayer = ReadPlayerByNumber(updatedPlayer.Number);
+            var existingPlayer = ReadPlayerById(updatedPlayer.Id);
 
             if (existingPlayer != null)
             {
@@ -38,9 +38,9 @@ namespace dao_library
             return false;
         }
 
-        public bool DeletePlayer(int number)
+        public bool DeletePlayer(int id)
         {
-            var playerToDelete = ReadPlayerByNumber(number);
+            var playerToDelete = ReadPlayerById(id);
 
             if (playerToDelete != null)
             {

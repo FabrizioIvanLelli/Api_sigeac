@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace dao_library
 {
-    internal class CourseDAO
+    public class CourseDAO
     {
         public Course CreateCourse(Course course)
         {
@@ -15,9 +15,9 @@ namespace dao_library
             return course;
         }
 
-        public Course? ReadCourseByName(string name)
+        public Course? ReadCourseById(long id)
         {
-            return MockDatabase.Courses.FirstOrDefault(s => s.Name == name);
+            return MockDatabase.Courses.FirstOrDefault(c => c.Id == id);
         }
 
         public List<Course> ReadCourses()
@@ -27,7 +27,7 @@ namespace dao_library
 
         public bool UpdateCourse(Course updatedCourse)
         {
-            var existingCourse = ReadCourseByName(updatedCourse.Name);
+            var existingCourse = ReadCourseById(updatedCourse.Id);
 
             if (existingCourse != null)
             {
@@ -39,9 +39,9 @@ namespace dao_library
             return false;
         }
 
-        public bool DeleteCourse(string name)
+        public bool DeleteCourse(long id)
         {
-            var courseToDelete = ReadCourseByName(name);
+            var courseToDelete = ReadCourseById(id);
 
             if (courseToDelete != null)
             {

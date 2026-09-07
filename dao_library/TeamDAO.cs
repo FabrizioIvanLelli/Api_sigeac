@@ -8,7 +8,7 @@ using entity_library;
 
 namespace dao_library
 {
-    internal class TeamDAO
+    public class TeamDAO
     {
     }
 }

@@ -9,7 +9,8 @@ namespace entity_library
     public enum TypeActivity
     {
         Exam,
-        Assignment,
-        HomeWork
+        Proyect,
+        PracticalWork,
+        Questionnaire
     }
 }

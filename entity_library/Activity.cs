@@ -8,11 +8,17 @@ namespace entity_library
 {
     public class Activity
     {
+        private long id;
         private string title = "";
         private string? description;
         private DateTime date;
-        private List<TypeActivity> types = new List<TypeActivity>();
+        private TypeActivity typeActivity;
 
+        public long Id
+        {
+            get { return id; }
+            set { id = value; }
+        }
         public string Title
         {
             get { return title; }
@@ -31,10 +37,10 @@ namespace entity_library
             set { date = value; }
         }
 
-        public List<TypeActivity> Types 
-        {  
-            get { return types; } 
-            set { types = value; }
+        public TypeActivity TypeActivity
+        {
+            get { return typeActivity; }
+            set { typeActivity = value; }
         }
     }
 }
