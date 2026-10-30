@@ -34,7 +34,7 @@ namespace dao_library.entity_framework
 
         public bool UpdateUser(User user)
         {
-            User? existingUser = MockDatabase.Users.FirstOrDefault(u => u.Id == user.Id);
+            User? existingUser = this.dbContext.Users.FirstOrDefault(u => u.Id == user.Id);
             if (existingUser == null)
             {
                 return false;
@@ -48,12 +48,14 @@ namespace dao_library.entity_framework
         }
         public bool DeleteUserById(long id)
         {
-            User? user = MockDatabase.Users.FirstOrDefault(u => u.Id == id);
+            User? user = this.dbContext.Users.FirstOrDefault(u => u.Id == id);
             if (user == null)
             {
                 return false;
             }
-            return MockDatabase.Users.Remove(user);
+            this.dbContext.Users.Remove(user);
+            this.dbContext.SaveChanges();
+            return true;
         }
 
     }

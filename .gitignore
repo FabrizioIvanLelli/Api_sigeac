@@ -361,4 +361,8 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# AI tooling working folders
+.atl/
+.codegraph/
 /Api_sigeac/Controllers/WeatherForecastController.cs

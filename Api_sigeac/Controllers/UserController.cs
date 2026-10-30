@@ -1,10 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Api_sigeac.DTOs;
 using dao_library.entity_framework;
-
-namespace api.Controllers;
-
 using entity_library;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
+namespace Api_sigeac.Controllers;
+
+[Authorize]
 [ApiController]
 [Route("[controller]")]
 public class UserController : ControllerBase
@@ -38,7 +44,7 @@ public class UserController : ControllerBase
             return StatusCode(500, "An error occurred with the server.");
         }
     }
-
+    [AllowAnonymous]
     [HttpPost]
     public ActionResult CreateUser(User user)
     {
@@ -46,7 +52,10 @@ public class UserController : ControllerBase
         {
             Email = user.Email,
             PasswordHash = entity_library.User.HashPassword(user.PasswordHash),
-            Username = user.Username
+            Username = user.Username,
+            Dni = user.Dni,
+            Name = user.Name,
+            Age = user.Age
         };
 
         _userDAO.SaveUser(createdUser);
@@ -65,6 +74,8 @@ public class UserController : ControllerBase
         }
 
         user.Id = id;
+
+        user.PasswordHash = entity_library.User.HashPassword(user.PasswordHash);
 
         _userDAO.UpdateUser(user);
 
@@ -90,5 +101,46 @@ public class UserController : ControllerBase
             _logger.LogError(ex, "Error deleting user with ID {UserId}", id);
             return StatusCode(500, "An error occurred while deleting the user.");
         }
+    }
+    [AllowAnonymous]
+    [HttpPost("login")]
+    public IActionResult Login([FromBody] LoginDTO loginDTO, [FromServices] IConfiguration config)
+    {
+        var user = _userDAO.GetUserEmail(loginDTO.Email);
+
+        if (user == null)
+        {
+            return Unauthorized("Credenciales inválidas.");
+        }
+
+        bool isPasswordValid = entity_library.User.VerifyPassword(loginDTO.Password, user.PasswordHash);
+
+        if (!isPasswordValid)
+        {
+            return Unauthorized("Credenciales inválidas.");
+        }
+
+        var jwtKey = config["Jwt:Key"];
+        var keyBytes = Encoding.UTF8.GetBytes(jwtKey!);
+
+        var claims = new ClaimsIdentity(new[]
+        {
+            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            new Claim(ClaimTypes.Email, user.Email),
+            new Claim(ClaimTypes.Name, user.Username)
+        });
+
+        var tokenDescriptor = new SecurityTokenDescriptor
+        {
+            Subject = claims,
+            Expires = DateTime.UtcNow.AddHours(2),
+            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(keyBytes), SecurityAlgorithms.HmacSha256Signature)
+        };
+
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var tokenConfig = tokenHandler.CreateToken(tokenDescriptor);
+        var token = tokenHandler.WriteToken(tokenConfig);
+
+        return Ok(new { Token = token });
     }
 }
