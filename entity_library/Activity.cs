@@ -25,10 +25,10 @@ namespace entity_library
             set { title = value; }
         }
 
-        public string Description
+        public string? Description
         {
-            get { return title; }
-            set { title = value; }
+            get { return description; }
+            set { description = value; }
         }
 
         public DateTime Date 

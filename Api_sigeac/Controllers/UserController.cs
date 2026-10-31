@@ -44,6 +44,7 @@ public class UserController : ControllerBase
             return StatusCode(500, "An error occurred with the server.");
         }
     }
+
     [AllowAnonymous]
     [HttpPost]
     public ActionResult CreateUser(User user)
